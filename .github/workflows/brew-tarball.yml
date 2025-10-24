@@ -61,7 +61,7 @@ jobs:
           OUTDIR="./brew-out"
           SHASUM_DIR="./brew-sum"
           TARBALL_FILENAME="homebrew-$(arch).tar.zst"
-
+          mkdir -p "$OUTDIR"
           podman run --rm -it \
               -v "$OUTDIR:/outdir:Z" \
               cgr.dev/chainguard/wolfi-base:latest \
