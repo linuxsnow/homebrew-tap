@@ -56,7 +56,7 @@ jobs:
       - name: Generate Homebrew tarball
         id: generate_tarball
         run: |
-          set -euox pipefail
+          set -x
 
           OUTDIR="./brew-out"
           SHASUM_DIR="./brew-sum"
