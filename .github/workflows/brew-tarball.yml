@@ -74,7 +74,7 @@ jobs:
               ln -s /bin/bash /usr/bin/bash
               ls -s /usr/bin/grep /bin/grep
               env --ignore-environment PATH=/usr/bin:/bin:/usr/sbin:/sbin HOME=/home/linuxbrew NONINTERACTIVE=1 /usr/bin/bash /tmp/brew-install
-              tar --zstd -cvf /outdir/{{ TARBALL_FILENAME }} /home/linuxbrew/.linuxbrew"
+              tar --zstd -cvf /outdir/$TARBALL_FILENAME /home/linuxbrew/.linuxbrew"
 
           mkdir -p $SHASUM_DIR
           for spice in 1 256 512 ; do
