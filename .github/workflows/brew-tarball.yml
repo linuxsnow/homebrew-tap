@@ -57,13 +57,24 @@ jobs:
         id: generate_tarball
         run: |
           set -euox pipefail
-          just=$(which just)
 
           OUTDIR="./brew-out"
           SHASUM_DIR="./brew-sum"
           TARBALL_FILENAME="homebrew-$(arch).tar.zst"
 
-          $just generate-homebrew-tarball ${OUTDIR} ${TARBALL_FILENAME}
+          podman run --rm -it \
+              -v "$OUTDIR:/outdir:Z" \
+              cgr.dev/chainguard/wolfi-base:latest \
+              /bin/sh -c "
+              set -o xtrace
+              apk add curl git zstd posix-libc-utils uutils gnutar grep
+              curl --retry 3 -Lo /tmp/brew-install https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+              chmod +x /tmp/brew-install
+              touch /.dockerenv
+              ln -s /bin/bash /usr/bin/bash
+              ls -s /usr/bin/grep /bin/grep
+              env --ignore-environment PATH=/usr/bin:/bin:/usr/sbin:/sbin HOME=/home/linuxbrew NONINTERACTIVE=1 /usr/bin/bash /tmp/brew-install
+              tar --zstd -cvf /outdir/{{ TARBALL_FILENAME }} /home/linuxbrew/.linuxbrew"
 
           mkdir -p $SHASUM_DIR
           for spice in 1 256 512 ; do
