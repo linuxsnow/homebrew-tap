@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
-      - '.github/workflows/brew-tarball.yml'
+      - ".github/workflows/brew-tarball.yml"
   schedule:
     - cron: "0 1 * * TUE" # Every Tuesday at 1am UTC
 
@@ -33,7 +33,7 @@ jobs:
           name: Homebrew Tarball (${{ steps.date.outputs.date }})
           tag_name: "homebrew-${{ steps.date.outputs.tag_date }}"
           body: |
-            This is a homebrew tarball generated for the [SNOW Linux](https://github.com/linuxsnow/snowdesktop) image.
+            This is a homebrew tarball generated for the [SNOW Linux](https://github.com/frostyard/snow) image.
             It exists so that images can have a consistent tarball base to install homebrew
           make_latest: true
 
